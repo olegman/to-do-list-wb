@@ -1,0 +1,15 @@
+.Todo-list-item {
+  margin-bottom: 20px;
+
+  &__name {
+    display: flex;
+    margin-bottom: 12px;
+  }
+
+  &__check,
+  &__edit,
+  &__save {
+    margin-right: 12px;
+  }
+
+}
