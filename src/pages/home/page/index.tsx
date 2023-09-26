@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import classnames from 'classnames/bind';
 import styles from './index.module.scss';
 import { Header } from './_components/header';
-import { TodoList } from './_components/todo-list';
+import { ConnectedTodoList } from './_components/todos/_components/connected-todo-list';
 
 const cn = classnames.bind(styles);
 
@@ -12,7 +12,7 @@ export const Page = memo(() => (
   <div className={cn(BLOCK_NAME)} data-page="home-page">
     <Header />
     <div className={cn(`${BLOCK_NAME}__content-wrapper`)}>
-      <TodoList />
+      <ConnectedTodoList />
     </div>
   </div>
 ));
