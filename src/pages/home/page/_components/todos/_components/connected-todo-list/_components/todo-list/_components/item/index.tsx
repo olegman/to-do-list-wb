@@ -71,13 +71,16 @@ export const TodoListItem = memo(
       setEdit(!edit);
     }, [edit]);
 
-    const handleChangeCheckTodo = ({ value }) => {
-      onChangeCheckTodo(value, todo.id);
-    };
+    const handleChangeCheckTodo = useCallback(
+      ({ value }) => {
+        onChangeCheckTodo(value, todo.id);
+      },
+      [onChangeCheckTodo, todo],
+    );
 
-    const handleRemoveTodo = () => {
+    const handleRemoveTodo = useCallback(() => {
       onRemoveTodo(todo.id);
-    };
+    }, [onRemoveTodo, todo]);
 
     return (
       <div className={cn(BLOCK_NAME)}>
