@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useMemo } from 'react';
 import classnames from 'classnames/bind';
 import {
   Checkbox,
@@ -65,6 +65,20 @@ export const TodoListItem = memo(
       setEdit(false);
     }, [onEditTodo, todo, editTodo, setEdit]);
 
+    const date = useMemo(() => getFormattedDate(todo.date), [todo.date]);
+
+    const handleSetEdit = useCallback(() => {
+      setEdit(!edit);
+    }, [edit]);
+
+    const handleChangeCheckTodo = ({ value }) => {
+      onChangeCheckTodo(value, todo.id);
+    };
+
+    const handleRemoveTodo = () => {
+      onRemoveTodo(todo.id);
+    };
+
     return (
       <div className={cn(BLOCK_NAME)}>
         {edit ? (
@@ -83,7 +97,7 @@ export const TodoListItem = memo(
                 checked={todo.check}
                 id={`check-${todo.id}`}
                 name={`check-${todo.id}`}
-                onChange={({ value }) => onChangeCheckTodo(value, todo.id)}
+                onChange={handleChangeCheckTodo}
               />
             </div>
             <Label htmlFor="check">{todo.name}</Label>
@@ -102,7 +116,7 @@ export const TodoListItem = memo(
           )}
         </div>
         <div>
-          <Text size="h3" text={getFormattedDate(todo.date)} />
+          <Text size="h3" text={date} />
         </div>
         {edit ? (
           <span className={cn(`${BLOCK_NAME}__save`)}>
@@ -115,16 +129,14 @@ export const TodoListItem = memo(
         ) : (
           <span className={cn(`${BLOCK_NAME}__edit`)}>
             <ButtonLink
-              onClick={() => {
-                setEdit(!edit);
-              }}
+              onClick={handleSetEdit}
               text="редактировать"
               variant="interface"
             />
           </span>
         )}
         <ButtonLink
-          onClick={() => onRemoveTodo(todo.id)}
+          onClick={handleRemoveTodo}
           text="удалить"
           variant="remove"
         />
