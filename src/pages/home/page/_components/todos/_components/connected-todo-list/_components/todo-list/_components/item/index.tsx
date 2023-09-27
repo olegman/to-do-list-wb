@@ -7,6 +7,7 @@ import {
   ButtonLink,
   SimpleInput,
   TextAreaInput,
+  Preloader,
 } from '@wildberries/ui-kit';
 import { getFormattedDate } from '@/_utils/date';
 import { TTodo } from '../../../../../../types';
@@ -16,11 +17,12 @@ const cn = classnames.bind(styles);
 
 const BLOCK_NAME = 'Todo-list-item';
 
-type TTodoListItemProps = {
+type TProps = {
   todo: TTodo;
   onRemoveTodo: (id: number) => void;
   onEditTodo: (title: string, description: string, id: number) => void;
   onChangeCheckTodo: (check: boolean, id: number) => void;
+  editTodoIdLoading: number | null;
 };
 type TEditTodo = {
   name: string;
@@ -33,7 +35,8 @@ export const TodoListItem = memo(
     onRemoveTodo,
     onEditTodo,
     onChangeCheckTodo,
-  }: TTodoListItemProps) => {
+    editTodoIdLoading,
+  }: TProps) => {
     const [edit, setEdit] = useState(false);
 
     const [editTodo, setEditTodo] = useState<TEditTodo>({
@@ -84,65 +87,71 @@ export const TodoListItem = memo(
 
     return (
       <div className={cn(BLOCK_NAME)}>
-        {edit ? (
-          <div className={cn(`${BLOCK_NAME}__name`)}>
-            <SimpleInput
-              id="name"
-              name="name"
-              onChange={handleChangeName}
-              value={editTodo.name}
-            />
-          </div>
+        {editTodoIdLoading === todo.id ? (
+          <Preloader color="dark-purple" size="large" />
         ) : (
-          <div className={cn(`${BLOCK_NAME}__name`)}>
-            <div className={cn(`${BLOCK_NAME}__check`)}>
-              <Checkbox
-                checked={todo.check}
-                id={`check-${todo.id}`}
-                name={`check-${todo.id}`}
-                onChange={handleChangeCheckTodo}
-              />
+          <>
+            {edit ? (
+              <div className={cn(`${BLOCK_NAME}__name`)}>
+                <SimpleInput
+                  id="name"
+                  name="name"
+                  onChange={handleChangeName}
+                  value={editTodo.name}
+                />
+              </div>
+            ) : (
+              <div className={cn(`${BLOCK_NAME}__name`)}>
+                <div className={cn(`${BLOCK_NAME}__check`)}>
+                  <Checkbox
+                    checked={todo.check}
+                    id={`check-${todo.id}`}
+                    name={`check-${todo.id}`}
+                    onChange={handleChangeCheckTodo}
+                  />
+                </div>
+                <Label htmlFor="check">{todo.name}</Label>
+              </div>
+            )}
+            <div>
+              {edit ? (
+                <TextAreaInput
+                  id="description"
+                  name="description"
+                  onChange={handleChangeDescription}
+                  value={editTodo.description}
+                />
+              ) : (
+                <Text size="h3" text={todo.description} />
+              )}
             </div>
-            <Label htmlFor="check">{todo.name}</Label>
-          </div>
-        )}
-        <div>
-          {edit ? (
-            <TextAreaInput
-              id="description"
-              name="description"
-              onChange={handleChangeDescription}
-              value={editTodo.description}
-            />
-          ) : (
-            <Text size="h3" text={todo.description} />
-          )}
-        </div>
-        <div>
-          <Text size="h3" text={date} />
-        </div>
-        {edit ? (
-          <span className={cn(`${BLOCK_NAME}__save`)}>
+            <div>
+              <Text size="h3" text={date} />
+            </div>
+            {edit ? (
+              <span className={cn(`${BLOCK_NAME}__save`)}>
+                <ButtonLink
+                  onClick={handleClickEdit}
+                  text="сохранить"
+                  variant="interface"
+                />
+              </span>
+            ) : (
+              <span className={cn(`${BLOCK_NAME}__edit`)}>
+                <ButtonLink
+                  onClick={handleSetEdit}
+                  text="редактировать"
+                  variant="interface"
+                />
+              </span>
+            )}
             <ButtonLink
-              onClick={handleClickEdit}
-              text="сохранить"
-              variant="interface"
+              onClick={handleRemoveTodo}
+              text="удалить"
+              variant="remove"
             />
-          </span>
-        ) : (
-          <span className={cn(`${BLOCK_NAME}__edit`)}>
-            <ButtonLink
-              onClick={handleSetEdit}
-              text="редактировать"
-              variant="interface"
-            />
-          </span>
+          </>
         )}
-        <ButtonLink
-          onClick={handleRemoveTodo}
-          text="удалить"
-          variant="remove"
-        />
       </div>
     );
   },

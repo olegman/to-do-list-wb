@@ -1,6 +1,11 @@
 import React, { memo, useCallback, useState, useMemo } from 'react';
 import classnames from 'classnames/bind';
-import { ButtonLink, SimpleInput, TextAreaInput } from '@wildberries/ui-kit';
+import {
+  ButtonLink,
+  SimpleInput,
+  TextAreaInput,
+  Preloader,
+} from '@wildberries/ui-kit';
 import styles from './index.module.scss';
 
 const cn = classnames.bind(styles);
@@ -9,6 +14,7 @@ const BLOCK_NAME = 'Todo-list-add';
 
 type TProps = {
   onAddTodo: (name: string, description: string) => void;
+  isAddTodoLoading: boolean;
 };
 
 type TAddTodo = {
@@ -16,7 +22,7 @@ type TAddTodo = {
   description: string;
 };
 
-export const TodoListAdd = memo(({ onAddTodo }: TProps) => {
+export const TodoListAdd = memo(({ onAddTodo, isAddTodoLoading }: TProps) => {
   const initialState: TAddTodo = useMemo(
     () => ({
       name: '',
@@ -65,9 +71,13 @@ export const TodoListAdd = memo(({ onAddTodo }: TProps) => {
           value={addTodo.description}
         />
       </div>
-      <div className={cn(`${BLOCK_NAME}__button`)}>
-        <ButtonLink onClick={handleAddTodo} text="добавить" variant="add" />
-      </div>
+      {isAddTodoLoading ? (
+        <Preloader color="dark-purple" size="medium" />
+      ) : (
+        <div className={cn(`${BLOCK_NAME}__button`)}>
+          <ButtonLink onClick={handleAddTodo} text="добавить" variant="add" />
+        </div>
+      )}
     </div>
   );
 });

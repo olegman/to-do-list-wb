@@ -38,14 +38,18 @@ const addTodoController = async (req, res) => {
         check: false,
     }).write();
 
+    const todos = await todoModel.value();
+
     res.status(200).json({
         jsonrpc: '2.0',
-        result: {},
+        result: {
+            todos
+        },
         id,
     });
 };
 
-const updateTodoController = async (req, res) => {
+const editTodoController = async (req, res) => {
     const {
         id,
         params: {
@@ -60,6 +64,27 @@ const updateTodoController = async (req, res) => {
             .set('name', name)
             .set('description', description)
             .write();
+
+    res.status(200).json({
+        jsonrpc: '2.0',
+        result: {},
+        id,
+    });
+};
+
+const changeCheckTodoController = async (req, res) => {
+    const {
+        id,
+        params: {
+            id: todoId,
+            check,
+        }
+    } = req.body;
+
+    await todoModel
+        .find({ id: todoId })
+        .set('check', check)
+        .write();
 
     res.status(200).json({
         jsonrpc: '2.0',
@@ -86,6 +111,7 @@ const deleteTodoController = async (req, res) => {
 module.exports = {
     getTodosController,
     addTodoController,
-    updateTodoController,
+    editTodoController,
+    changeCheckTodoController,
     deleteTodoController,
 };
