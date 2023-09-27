@@ -1,10 +1,10 @@
 import React, { memo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
-import { removeTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/remove-todo-request-config';
-import { editTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/edit-todo-request-config';
-import { changeCheckTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/change-check-todo-request-config';
-import { addTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/add-todo-request-config';
+import { removeTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/remove-todo-config';
+import { editTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/edit-todo-config';
+import { changeCheckTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/change-check-todo-config';
+import { addTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/add-todo-config';
 import {
   isAddTodoLoadingSelector,
   todosSelector,
