@@ -49,7 +49,7 @@ const addTodoController = async (req, res) => {
     });
 };
 
-const updateTodoController = async (req, res) => {
+const editTodoController = async (req, res) => {
     const {
         id,
         params: {
@@ -111,7 +111,7 @@ const deleteTodoController = async (req, res) => {
 module.exports = {
     getTodosController,
     addTodoController,
-    updateTodoController,
+    editTodoController,
     changeCheckTodoController,
     deleteTodoController,
 };

@@ -1,10 +1,10 @@
 import React, { memo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
-import { addTodoRequest } from '@/api/requests/add-todo';
-import { removeTodoRequest } from '@/api/requests/remove-todo';
-import { editTodoRequest } from '@/api/requests/edit-todo';
-import { changeCheckTodoRequest } from '@/api/requests/change-check-todo';
+import { removeTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/remove-todo-request-config';
+import { editTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/edit-todo-request-config';
+import { changeCheckTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/change-check-todo-request-config';
+import { addTodoConfig } from '@/pages/home/page/_components/todos/_components/connected-todo-list/_utils/add-todo-request-config';
 import {
   isAddTodoLoadingSelector,
   todosSelector,
@@ -12,12 +12,7 @@ import {
 } from '../../_redux/todos-module/selectors';
 import { TPayloadTodos, TTodosState } from '../../_redux/todos-module/types';
 import { TTodo } from '../../types';
-import {
-  setEditTodoIdLoadingAction,
-  setTodosAction,
-  startAddTodoLoadingAction,
-  stopAddTodoLoadingAction,
-} from '../../_redux/todos-module/actions';
+import { setTodosAction } from '../../_redux/todos-module/actions';
 import { TodoList } from './_components/todo-list';
 
 type TProps = TMapStateToProps & TMapDispatchToProps;
@@ -50,17 +45,7 @@ const WrappedContainer = memo(
         };
 
         initLoadManager({
-          requestConfigList: [
-            {
-              request: removeTodoRequest,
-              requestOptions: {
-                id,
-              },
-              callBackOnSuccess,
-              loadingStartAction: () => setEditTodoIdLoadingAction(id),
-              loadingStopAction: () => setEditTodoIdLoadingAction(null),
-            },
-          ],
+          requestConfigList: removeTodoConfig({ id, callBackOnSuccess }),
         });
       },
       [todos, setTodos, initLoadManager],
@@ -83,19 +68,12 @@ const WrappedContainer = memo(
         };
 
         initLoadManager({
-          requestConfigList: [
-            {
-              request: editTodoRequest,
-              requestOptions: {
-                name,
-                description,
-                id,
-              },
-              callBackOnSuccess,
-              loadingStartAction: () => setEditTodoIdLoadingAction(id),
-              loadingStopAction: () => setEditTodoIdLoadingAction(null),
-            },
-          ],
+          requestConfigList: editTodoConfig({
+            name,
+            description,
+            id,
+            callBackOnSuccess,
+          }),
         });
       },
       [todos, setTodos, initLoadManager],
@@ -117,18 +95,11 @@ const WrappedContainer = memo(
         };
 
         initLoadManager({
-          requestConfigList: [
-            {
-              request: changeCheckTodoRequest,
-              requestOptions: {
-                check,
-                id,
-              },
-              callBackOnSuccess,
-              loadingStartAction: () => setEditTodoIdLoadingAction(id),
-              loadingStopAction: () => setEditTodoIdLoadingAction(null),
-            },
-          ],
+          requestConfigList: changeCheckTodoConfig({
+            check,
+            id,
+            callBackOnSuccess,
+          }),
         });
       },
       [todos, setTodos, initLoadManager],
@@ -141,18 +112,11 @@ const WrappedContainer = memo(
         };
 
         initLoadManager({
-          requestConfigList: [
-            {
-              request: addTodoRequest,
-              requestOptions: {
-                name,
-                description,
-              },
-              callBackOnSuccess,
-              loadingStartAction: startAddTodoLoadingAction,
-              loadingStopAction: stopAddTodoLoadingAction,
-            },
-          ],
+          requestConfigList: addTodoConfig({
+            name,
+            description,
+            callBackOnSuccess,
+          }),
         });
       },
       [setTodos, initLoadManager],
