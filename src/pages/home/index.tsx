@@ -9,7 +9,7 @@ import reducerUI, {
   MODULE_REDUCER_NAME as reducerUIName,
 } from '@/_redux/ui-module';
 import { storeInjectConfig } from '@/pages/home/page/_components/todos/store-inject-config';
-import { Page } from './page';
+import { ConnectedHomePage } from './page';
 
 const pageNode = 'home';
 
@@ -28,7 +28,7 @@ const action = async ({ store, toState }) => {
           <RouteNode nodeName={pageNode}>
             {({ route, content }) => {
               if (route.name === pageNode) {
-                return <Page />;
+                return <ConnectedHomePage />;
               }
 
               return content;

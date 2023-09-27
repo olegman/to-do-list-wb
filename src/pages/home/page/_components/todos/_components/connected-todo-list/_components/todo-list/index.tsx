@@ -15,6 +15,8 @@ type TProps = {
   onEditTodo: (name: string, description: string, id: number) => void;
   onChangeCheckTodo: (check: boolean, id: number) => void;
   onAddTodo: (name: string, description: string) => void;
+  isAddTodoLoading: boolean;
+  editTodoIdLoading: number | null;
 };
 
 export const TodoList = memo(
@@ -24,12 +26,15 @@ export const TodoList = memo(
     onEditTodo,
     onChangeCheckTodo,
     onAddTodo,
+    isAddTodoLoading,
+    editTodoIdLoading,
   }: TProps) => {
     return (
       <div className={cn(BLOCK_NAME)}>
         {todos.map((todo) => (
           <TodoListItem
             key={todo.id}
+            editTodoIdLoading={editTodoIdLoading}
             onChangeCheckTodo={onChangeCheckTodo}
             onEditTodo={onEditTodo}
             onRemoveTodo={onRemoveTodo}
@@ -37,7 +42,10 @@ export const TodoList = memo(
           />
         ))}
 
-        <TodoListAdd onAddTodo={onAddTodo} />
+        <TodoListAdd
+          isAddTodoLoading={isAddTodoLoading}
+          onAddTodo={onAddTodo}
+        />
       </div>
     );
   },

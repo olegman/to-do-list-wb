@@ -38,9 +38,13 @@ const addTodoController = async (req, res) => {
         check: false,
     }).write();
 
+    const todos = await todoModel.value();
+
     res.status(200).json({
         jsonrpc: '2.0',
-        result: {},
+        result: {
+            todos
+        },
         id,
     });
 };
@@ -68,6 +72,27 @@ const updateTodoController = async (req, res) => {
     });
 };
 
+const changeCheckTodoController = async (req, res) => {
+    const {
+        id,
+        params: {
+            id: todoId,
+            check,
+        }
+    } = req.body;
+
+    await todoModel
+        .find({ id: todoId })
+        .set('check', check)
+        .write();
+
+    res.status(200).json({
+        jsonrpc: '2.0',
+        result: {},
+        id,
+    });
+};
+
 const deleteTodoController = async (req, res) => {
     const {
         id,
@@ -87,5 +112,6 @@ module.exports = {
     getTodosController,
     addTodoController,
     updateTodoController,
+    changeCheckTodoController,
     deleteTodoController,
 };

@@ -1,18 +1,21 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
-import styles from './index.module.scss';
-import { Header } from './_components/header';
-import { ConnectedTodoList } from './_components/todos/_components/connected-todo-list';
+import { connect } from 'react-redux';
+import { TTodosState } from '@/pages/home/page/_components/todos/_redux/todos-module/types';
+import { isLoadingTodosSelector } from '@/pages/home/page/_components/todos/_redux/todos-module/selectors';
+import { HomePage } from '@/pages/home/page/_components/home-page';
 
-const cn = classnames.bind(styles);
+type TProps = TMapStateToProps;
 
-const BLOCK_NAME = 'Home-page';
+type TMapStateToProps = {
+  isLoading: boolean;
+};
 
-export const Page = memo(() => (
-  <div className={cn(BLOCK_NAME)} data-page="home-page">
-    <Header />
-    <div className={cn(`${BLOCK_NAME}__content-wrapper`)}>
-      <ConnectedTodoList />
-    </div>
-  </div>
+const WrappedComponent = memo(({ isLoading }: TProps) => (
+  <HomePage isLoading={isLoading} />
 ));
+
+const mapStateToProps = (state: TTodosState): TMapStateToProps => ({
+  isLoading: isLoadingTodosSelector(state),
+});
+
+export const ConnectedHomePage = connect(mapStateToProps)(WrappedComponent);

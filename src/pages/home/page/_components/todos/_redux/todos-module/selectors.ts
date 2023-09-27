@@ -10,3 +10,18 @@ export const todosSelector = createSelector(
   [todosStorage],
   ({ todos }: TTodosState) => todos,
 );
+
+export const isLoadingTodosSelector = createSelector(
+  [todosStorage],
+  ({ isLoading }: TTodosState) => isLoading,
+);
+
+export const isAddTodoLoadingSelector = createSelector(
+  [todosStorage],
+  ({ isAddTodoLoading }: TTodosState) => isAddTodoLoading,
+);
+
+export const editTodoIdLoadingSelector = createSelector(
+  [todosStorage],
+  ({ editTodoIdLoading }: TTodosState) => editTodoIdLoading,
+);
