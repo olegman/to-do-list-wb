@@ -11,4 +11,10 @@ export default {
     version: 'appVersion',
     localDictionaryFiles: I18N_DICTIONARY,
   },
+  params: {
+    endpointsConfig: {
+      fromWindow: true,
+      staticPath: 'publicPathForReplace',
+    },
+  },
 };
