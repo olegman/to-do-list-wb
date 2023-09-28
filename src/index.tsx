@@ -1,5 +1,5 @@
 import 'fast-text-encoding/text';
-/* 
+/*
     if you need some polyfills and you are not in "rus" or "euro" version
     please insert below (package is included)
     import 'react-app-polyfill/stable';
@@ -64,7 +64,7 @@ const store = createAppStore({
 });
 
 const i18nextConfig = {
-  getLocale,
+  getLocale: () => getLocale({ isFromCookie: true }),
   i18next,
   i18nextRequest,
   actionToStartLoading: starti18nextLoadingAction,
@@ -81,7 +81,10 @@ router.setDependencies({
 
 router.add(routes);
 
-geti18Next({ appNamespace: APP_NAMESPACE, locale: getLocale() }).then(() =>
+geti18Next({
+  appNamespace: APP_NAMESPACE,
+  locale: getLocale({ isFromCookie: true }),
+}).then(() =>
   router.start(() => {
     ReactDOM.render(
       <Provider store={store}>

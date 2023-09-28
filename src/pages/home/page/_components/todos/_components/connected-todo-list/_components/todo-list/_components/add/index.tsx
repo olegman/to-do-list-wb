@@ -6,6 +6,8 @@ import {
   TextAreaInput,
   Preloader,
 } from '@wildberries/ui-kit';
+import i18next from 'i18next';
+import { TRANSLATIONS } from '@/_constants/i18next/translations';
 import styles from './index.module.scss';
 
 const cn = classnames.bind(styles);
@@ -75,7 +77,11 @@ export const TodoListAdd = memo(({ onAddTodo, isAddTodoLoading }: TProps) => {
         <Preloader color="dark-purple" size="medium" />
       ) : (
         <div className={cn(`${BLOCK_NAME}__button`)}>
-          <ButtonLink onClick={handleAddTodo} text="добавить" variant="add" />
+          <ButtonLink
+            onClick={handleAddTodo}
+            text={i18next.t(TRANSLATIONS.addTodoButton)}
+            variant="add"
+          />
         </div>
       )}
     </div>

@@ -9,7 +9,9 @@ import {
   TextAreaInput,
   Preloader,
 } from '@wildberries/ui-kit';
+import i18next from 'i18next';
 import { getFormattedDate } from '@/_utils/date';
+import { TRANSLATIONS } from '@/_constants/i18next/translations';
 import { TTodo } from '../../../../../../types';
 import styles from './index.module.scss';
 
@@ -132,7 +134,7 @@ export const TodoListItem = memo(
               <span className={cn(`${BLOCK_NAME}__save`)}>
                 <ButtonLink
                   onClick={handleClickEdit}
-                  text="сохранить"
+                  text={i18next.t(TRANSLATIONS.saveTodoButton)}
                   variant="interface"
                 />
               </span>
@@ -140,14 +142,14 @@ export const TodoListItem = memo(
               <span className={cn(`${BLOCK_NAME}__edit`)}>
                 <ButtonLink
                   onClick={handleSetEdit}
-                  text="редактировать"
+                  text={i18next.t(TRANSLATIONS.editTodoButton)}
                   variant="interface"
                 />
               </span>
             )}
             <ButtonLink
               onClick={handleRemoveTodo}
-              text="удалить"
+              text={i18next.t(TRANSLATIONS.removeTodoButton)}
               variant="remove"
             />
           </>
