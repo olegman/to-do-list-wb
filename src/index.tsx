@@ -81,7 +81,10 @@ router.setDependencies({
 
 router.add(routes);
 
-geti18Next({ appNamespace: APP_NAMESPACE, locale: getLocale({ isFromCookie: true }) }).then(() =>
+geti18Next({
+  appNamespace: APP_NAMESPACE,
+  locale: getLocale({ isFromCookie: true }),
+}).then(() =>
   router.start(() => {
     ReactDOM.render(
       <Provider store={store}>
