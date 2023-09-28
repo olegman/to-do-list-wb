@@ -8,6 +8,7 @@ export default {
   // uncomment if you need translations
   i18n: {
     namespaces: [APP_NAMESPACE],
+    version: 'appVersion',
     localDictionaryFiles: I18N_DICTIONARY,
   },
 };
